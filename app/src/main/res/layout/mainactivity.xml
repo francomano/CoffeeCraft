@@ -12,16 +12,16 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginTop="24dp"/>
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
         android:layout_below="@id/textViewWelcome"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextPassword"
-        android:layout_marginTop="353dp"
+        android:layout_marginTop="16dp"
         android:text="Log In" />
 
     <TextView
@@ -46,8 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLogin"
         android:layout_marginTop="16dp"
-        android:text=""
+        android:text="Result of the connection"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
 </RelativeLayout>
