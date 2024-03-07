@@ -32,3 +32,11 @@ venv/
 
 # IDE settings for Visual Studio Code
 .vscode/
+
+# Gradle
+.gradle/
+local.properties
+
+# Idea
+.idea/
+
