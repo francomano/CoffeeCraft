@@ -24,13 +24,21 @@ public class loginActivity extends AppCompatActivity {
         TextInputEditText email = findViewById(R.id.emailTextField);
         TextInputEditText password = findViewById(R.id.passwordTextField);
         MaterialButton logInButton = findViewById(R.id.buttonLogIn);
+        MaterialButton createAccount = findViewById(R.id.createAccountButton);
 
-        Intent intent = new Intent(this, mainActivity.class);
+        Intent intent1 = new Intent(this, mainActivity.class);
 
         logInButton.setOnClickListener(view -> {
-            intent.putExtra("email", email.getText().toString());
-            intent.putExtra("password", password.getText().toString());
-            startActivity(intent);
+            intent1.putExtra("email", email.getText().toString());
+            intent1.putExtra("password", password.getText().toString());
+            startActivity(intent1);
+            loginActivity.this.finish();
+        });
+
+        Intent intent2 = new Intent(this, newAccountActivity.class);
+
+        createAccount.setOnClickListener(view -> {
+            startActivity(intent2);
             loginActivity.this.finish();
         });
     }

@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="coffee">#9A3B3B</color>
     <color name="transparent">#00000000</color>
+    <color name="red">#FF0000</color>
 </resources>

@@ -11,7 +11,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 public class mainActivity extends AppCompatActivity {
 
-    Context context;
+
 
     String email;
     String password;
@@ -19,7 +19,6 @@ public class mainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainactivity);
-        context = this.getBaseContext();
 
         Intent intent = getIntent();
 
