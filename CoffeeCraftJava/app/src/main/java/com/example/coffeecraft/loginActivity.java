@@ -14,7 +14,7 @@ import com.google.android.material.textview.MaterialTextView;
 public class loginActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { //this method is called by every activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginactivity);
         logInBtnListener();
@@ -39,7 +39,7 @@ public class loginActivity extends AppCompatActivity {
 
         createAccount.setOnClickListener(view -> {
             startActivity(intent2);
-            loginActivity.this.finish();
+            loginActivity.this.finish(); //this is the line of code that destroy the buttons of the login and create the ones of the create account
         });
     }
 }

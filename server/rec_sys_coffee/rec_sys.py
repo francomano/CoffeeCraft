@@ -38,7 +38,7 @@ user_email = "user3@email.com"
 trained_model, encoder = random_forest.train_and_recommend(users_data)
 
 # New purchase features
-new_purchase_features = [user_email, users_data[user_email]['immutables'],0, 1, 'sera', 'felice']
+new_purchase_features = [users_data[user_email]['immutables'],0, 1, 'sera', 'felice']
 
 # Make prediction
 predicted_label = random_forest.make_prediction(trained_model, encoder, new_purchase_features)
