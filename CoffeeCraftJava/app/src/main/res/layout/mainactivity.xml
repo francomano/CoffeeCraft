@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mainActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,22 +35,44 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/welcomeEmail"
+    <!-- Button for suggesting coffee -->
+    <Button
+        android:id="@+id/suggestCoffeeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="26dp"
+        android:text="Suggest Coffee"
         android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:text="" />
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/welcomePassword"
+        android:visibility="invisible" />
+
+    <!-- Option menu for selecting feelings (initially invisible) -->
+    <Spinner
+        android:id="@+id/feelingsSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="26dp"
         android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:layout_marginTop="30dp"
-        android:text="" />
+        android:visibility="invisible">
+        <!-- Add options for feelings here -->
+    </Spinner>
+
+    <!-- Checkboxes for selecting sugar and aromas (initially invisible) -->
+    <CheckBox
+        android:id="@+id/sugarCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sugar"
+        android:visibility="invisible" />
+
+    <CheckBox
+        android:id="@+id/aromasCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aromas"
+        android:visibility="invisible" />
+    <TextView
+        android:id="@+id/debugTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
 
 </LinearLayout>

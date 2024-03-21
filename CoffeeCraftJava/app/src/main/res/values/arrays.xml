@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="feelings_array">
+        <item>depressed</item>
+        <item>sad</item>
+        <item>normal</item>
+        <item>happy</item>
+        <item>joyful</item>
+    </string-array>
+</resources>
+
+
+
