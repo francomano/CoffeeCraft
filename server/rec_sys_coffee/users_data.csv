@@ -1,7 +1,7 @@
-email,immutables,zucchero,aromi,momento_giornata,stato_animo,label
-user1@email.com,italiano;studente;M,0,1,mattina,felice,Espresso
-user1@email.com,italiano;studente;M,1,0,pomeriggio,neutro,Americano
-user2@email.com,francese;lavoratore;F,1,0,sera,triste,Americano
-user2@email.com,francese;lavoratore;F,1,1,mattina,felice,Macchiato
-user3@email.com,spagnolo;impiegato;M,0,0,pomeriggio,triste,Espresso
-user3@email.com,spagnolo;impiegato;M,0,1,sera,felice,Americano
+email,immutables,sugar,aromas,time_of_day,mood,label
+user1@email.com,italian;student;M,0,1,morning,happy,Espresso
+user1@email.com,italian;student;M,1,0,afternoon,normal,Americano
+user2@email.com,french;worker;F,1,0,evening,sad,Americano
+user2@email.com,french;worker;F,1,1,morning,happy,Macchiato
+user3@email.com,spanish;employee;M,0,0,afternoon,sad,Espresso
+user3@email.com,spanish;employee;M,0,1,evening,happy,Americano
