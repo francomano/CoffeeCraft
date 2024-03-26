@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".mainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,98 @@
 
     </LinearLayout>
 
-    <!-- Button for suggesting coffee -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How do you feel ?"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:id="@+id/feelingtext"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+        android:id="@+id/imageemoji"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/emoji_depressed"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="@string/depressed"
+            android:focusable="true"
+            android:src="@drawable/disappointed"
+            />
+
+        <ImageView
+            android:id="@+id/emoji_sad"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="@string/sad"
+            android:focusable="true"
+            android:src="@drawable/slightly_frowning_face" />
+
+        <ImageView
+            android:id="@+id/emoji_neutral"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="@string/neutral"
+            android:focusable="true"
+            android:src="@drawable/neutral_face" />
+
+        <ImageView
+            android:id="@+id/emoji_happy"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="@string/happy"
+            android:focusable="true"
+            android:src="@drawable/blush" />
+        <ImageView
+            android:id="@+id/emoji_joyfull"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/smiley"
+            android:contentDescription="@string/joyfull"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Ajoutez les ImageView pour normal, happy et joyful de la même manière -->
+
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:id="@+id/checkBoxes">
+        <CheckBox
+            android:id="@+id/sugarCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sugar" />
+
+        <CheckBox
+            android:id="@+id/aromasCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aromas" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/suggestCoffeeButton"
         android:layout_width="wrap_content"
@@ -44,30 +135,6 @@
         android:layout_gravity="center"
         android:visibility="invisible" />
 
-    <!-- Option menu for selecting feelings (initially invisible) -->
-    <Spinner
-        android:id="@+id/feelingsSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible">
-        <!-- Add options for feelings here -->
-    </Spinner>
-
-    <!-- Checkboxes for selecting sugar and aromas (initially invisible) -->
-    <CheckBox
-        android:id="@+id/sugarCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sugar"
-        android:visibility="invisible" />
-
-    <CheckBox
-        android:id="@+id/aromasCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aromas"
-        android:visibility="invisible" />
     <TextView
         android:id="@+id/debugTextView"
         android:layout_width="wrap_content"

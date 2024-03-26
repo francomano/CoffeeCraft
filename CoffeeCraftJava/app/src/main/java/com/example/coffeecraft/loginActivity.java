@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
@@ -37,9 +39,17 @@ public class loginActivity extends AppCompatActivity {
 
         Intent intent2 = new Intent(this, newAccountActivity.class);
 
+        ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == loginActivity.RESULT_OK) {
+                    finish();
+                }
+            });
+
         createAccount.setOnClickListener(view -> {
-            startActivity(intent2);
-            loginActivity.this.finish(); //this is the line of code that destroy the buttons of the login and create the ones of the create account
+            mStartForResult.launch(intent2);
+            //this is the line of code that destroy the buttons of the login and create the ones of the create account
         });
     }
 }

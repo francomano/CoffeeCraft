@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CoffeeCraft</string>
+    <string name="depressed">depressed</string>
+    <string name="sad">sad</string>
+    <string name="neutral">neutral</string>
+    <string name="happy">happy\n</string>
+    <string name="joyfull">joyfull\n</string>
 </resources>

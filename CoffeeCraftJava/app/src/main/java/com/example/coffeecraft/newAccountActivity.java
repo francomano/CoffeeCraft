@@ -3,14 +3,18 @@ package com.example.coffeecraft;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.util.Patterns;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
+import com.example.coffeecraft.Utils.PasswordUtils;
+
 import org.w3c.dom.Text;
+
+import java.util.regex.Pattern;
 
 public class newAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,9 @@ public class newAccountActivity extends AppCompatActivity {
                 intent.putExtra("email", email1.getText().toString());
                 intent.putExtra("password", password1.getText().toString());
                 startActivity(intent);
-                newAccountActivity.this.finish();
+                Intent returnIntent = new Intent();
+                setResult(loginActivity.RESULT_OK,returnIntent);
+                finish();
             }
         });
     }
@@ -46,15 +52,23 @@ public class newAccountActivity extends AppCompatActivity {
     public String checkInputsEditText(TextInputEditText email1, TextInputEditText email2, TextInputEditText password1,
                                     TextInputEditText password2){
         String email1Str = email1.getText().toString();
+        if(!Patterns.EMAIL_ADDRESS.matcher(email1Str).matches()){
+            return "please enter a correct email address";
+        }
         String email2Str = email2.getText().toString();
 
         if (!email1Str.equals(email2Str)) return ("Emails must be the same");
 
         String password1Str = password1.getText().toString();
-        String password2Str = password2.getText().toString();
+        if(!PasswordUtils.isPasswordStrong(password1Str)){
+            if(password1Str.length() < 8) return "Password should contain minimum 8 characters";
+            return "Password should contain a capital letter, a digit and a special character";
+        } else {
+            String password2Str = password2.getText().toString();
 
-        if(!password1Str.equals(password2Str)) return ("Passwords must be the same");
+            if (!password1Str.equals(password2Str)) return ("Passwords must be the same");
 
-        return "checkCompleted";
+            return "checkCompleted";
+        }
     }
 }
