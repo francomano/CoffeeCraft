@@ -81,12 +81,20 @@ public class mainActivity extends AppCompatActivity {
         suggestCoffeeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle button click event here
-                // For example, you can perform some action when the button is clicked
-                // Here, let's just display a toast message
+
                 now = LocalDateTime.now();
-                String date = now.getDayOfMonth() + " " + now.getMonth() + " " + now.getYear();
-                String time = now.getHour() + ":" + now.getMinute();
+                //String date = now.getDayOfMonth() + " " + now.getMonth() + " " + now.getYear();
+                //String time = now.getHour() + ":" + now.getMinute();
+
+                int hour = now.getHour();
+                String partOfDay;
+                if (hour >= 5 && hour < 12) {
+                    partOfDay = "morning";
+                } else if (hour >= 12 && hour < 18) {
+                    partOfDay = "afternoon";
+                } else {
+                    partOfDay = "evening";
+                }
 
                 String selectedFeeling = feelingsSpinner.getSelectedItem().toString();
 
@@ -97,7 +105,7 @@ public class mainActivity extends AppCompatActivity {
                 outcomes.add(email);
                 outcomes.add(String.valueOf(sugarChecked));
                 outcomes.add(String.valueOf(aromasChecked));
-                outcomes.add(time);
+                outcomes.add(partOfDay);
                 outcomes.add(selectedFeeling);
 
                 debugTextView.setText("Outcomes: " + outcomes.toString());
