@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.material.slider.Slider;
 import com.google.android.material.textview.MaterialTextView;
 
 public class mainActivity extends AppCompatActivity {
@@ -37,19 +38,15 @@ public class mainActivity extends AppCompatActivity {
     LocalDateTime now;
     String date;
     String time;
-    String feeling;
+    String feeling, aroma;
 
     private Button suggestCoffeeButton;
-    private CheckBox sugarCheckBox;
-    private CheckBox aromasCheckBox;
-    private TextView debugTextView, feelingText;
-    ImageView depressedEmoji;
-    ImageView sadEmoji;
-    ImageView neutralEmoji;
-    ImageView happyEmoji;
-    ImageView joyfullEmoji;
-    ImageView currentImageView;
-    LinearLayout imageEmojiView, checkBoxes;
+    private Slider sugarSlider, milkSlider;
+    private MaterialTextView debugTextView, feelingText, aromasText, sugarText, milkText, selectedAroma;
+    ImageView depressedEmoji, joyfullEmoji, happyEmoji, neutralEmoji, sadEmoji;
+    ImageView chocolate, caramel, hazelnut, vanilla, speculoos;
+    ImageView currentImageView, currentAroma;
+    LinearLayout imageEmojiView, slider, imagearomas;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,30 +67,51 @@ public class mainActivity extends AppCompatActivity {
     public void showButtons() {
         // Initialize views
         suggestCoffeeButton = findViewById(R.id.suggestCoffeeButton);
-        sugarCheckBox = findViewById(R.id.sugarCheckBox);
-        aromasCheckBox = findViewById(R.id.aromasCheckBox);
+        sugarSlider = findViewById(R.id.sugarSlider);
+        milkSlider = findViewById(R.id.milkSlider);
+
+        imagearomas = findViewById(R.id.imagearomas);
+        imageEmojiView = findViewById(R.id.imageemoji);
+        slider = findViewById(R.id.slider);
+
         debugTextView = findViewById(R.id.debugTextView);
         feelingText = findViewById(R.id.feelingtext);
+        sugarText = findViewById(R.id.sugartext);
+        milkText = findViewById(R.id.milkText);
+        aromasText = findViewById(R.id.amorastext);
+        selectedAroma = findViewById(R.id.selectedAroma);
 
         depressedEmoji = findViewById(R.id.emoji_depressed);
         sadEmoji = findViewById(R.id.emoji_sad);
         neutralEmoji = findViewById(R.id.emoji_neutral);
         happyEmoji = findViewById(R.id.emoji_happy);
         joyfullEmoji = findViewById(R.id.emoji_joyfull);
-        imageEmojiView = findViewById(R.id.imageemoji);
-        checkBoxes = findViewById(R.id.checkBoxes);
 
-        imageEmojiView.setVisibility(View.VISIBLE);
-        sugarCheckBox.setVisibility(View.VISIBLE);
-        aromasCheckBox.setVisibility(View.VISIBLE);
+        chocolate = findViewById(R.id.chocolate);
+        caramel = findViewById(R.id.caramel);
+        vanilla = findViewById(R.id.vanilla);
+        speculoos = findViewById(R.id.speculoos);
+        hazelnut = findViewById(R.id.noisette);
+
+        sugarSlider.setVisibility(View.VISIBLE);
+        milkSlider.setVisibility(View.VISIBLE);
         debugTextView.setVisibility(View.VISIBLE);
         feelingText.setVisibility(View.VISIBLE);
+        imagearomas.setVisibility(View.VISIBLE);
+        imageEmojiView.setVisibility(View.VISIBLE);
+        aromasText.setVisibility(View.VISIBLE);
+        slider.setVisibility(View.VISIBLE);
+        aromasText.setVisibility(View.VISIBLE);
+        sugarText.setVisibility(View.VISIBLE);
+        milkText.setVisibility(View.VISIBLE);
+        selectedAroma.setVisibility(View.VISIBLE);
+
 
         // Set visibility of the suggestCoffeeButton and feelingsSpinner to VISIBLE
         suggestCoffeeButton.setVisibility(View.VISIBLE);
-        checkBoxes.setVisibility(View.VISIBLE);
 
         currentImageView = depressedEmoji;
+        currentAroma = hazelnut;
 
         depressedEmoji.setOnClickListener(view -> {
             feeling = depressedEmoji.getContentDescription().toString();
@@ -126,6 +144,45 @@ public class mainActivity extends AppCompatActivity {
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
 
+        hazelnut.setOnClickListener(view -> {
+            aroma = hazelnut.getContentDescription().toString();
+            currentAroma.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+            currentAroma = hazelnut;
+            selectedAroma.setText(currentAroma.getContentDescription().toString());
+            view.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        });
+        chocolate.setOnClickListener(view -> {
+            aroma = chocolate.getContentDescription().toString();
+            currentAroma.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+            currentAroma = chocolate;
+            selectedAroma.setText(currentAroma.getContentDescription().toString());
+            view.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        });
+        vanilla.setOnClickListener(view -> {
+            aroma = vanilla.getContentDescription().toString();
+            currentAroma.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+            currentAroma = vanilla;
+            selectedAroma.setText(currentAroma.getContentDescription().toString());
+            view.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        });
+        speculoos.setOnClickListener(view -> {
+            aroma = speculoos.getContentDescription().toString();
+            currentAroma.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+            currentAroma = speculoos;
+            selectedAroma.setText(currentAroma.getContentDescription().toString());
+            view.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        });
+        caramel.setOnClickListener(view -> {
+            aroma = caramel.getContentDescription().toString();
+            currentAroma.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+            currentAroma = caramel;
+            selectedAroma.setText(currentAroma.getContentDescription().toString());
+            view.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        });
+
+
+
+
 
         suggestCoffeeButton.setOnClickListener(v -> debugTextView.setText("Outcomes: " + getUserInfo()));
     }
@@ -145,14 +202,14 @@ public class mainActivity extends AppCompatActivity {
             partOfDay = "evening";
         }
 
-
-        int sugarChecked = sugarCheckBox.isChecked() ? 1 : 0;
-        int aromasChecked = aromasCheckBox.isChecked() ? 1 : 0;
+        int sugar = (int) sugarSlider.getValue();
+        int milk = (int) milkSlider.getValue();
 
         List<String> outcomes = new ArrayList<>();
         outcomes.add(email);
-        outcomes.add(String.valueOf(sugarChecked));
-        outcomes.add(String.valueOf(aromasChecked));
+        outcomes.add(String.valueOf(sugar));
+        outcomes.add(String.valueOf(milk));
+        outcomes.add(selectedAroma.getText().toString());
         outcomes.add(partOfDay);
         outcomes.add(feeling);
 

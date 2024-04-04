@@ -113,18 +113,117 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
-        android:id="@+id/checkBoxes">
-        <CheckBox
-            android:id="@+id/sugarCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sugar" />
+        android:id="@+id/slider">
 
-        <CheckBox
-            android:id="@+id/aromasCheckBox"
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aromas" />
+            android:text="Sugar :"
+            android:id="@+id/sugartext"
+            android:visibility="invisible"
+            android:layout_gravity="center" />
+
+        <com.google.android.material.slider.Slider
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/sugarSlider"
+            android:valueFrom="0.0"
+            android:valueTo="3.0"
+            android:stepSize="1.0" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Milk :"
+            android:visibility="invisible"
+            android:id="@+id/milkText"
+            android:layout_gravity="center" />
+
+        <com.google.android.material.slider.Slider
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/milkSlider"
+            android:valueFrom="0.0"
+            android:valueTo="3.0"
+            android:stepSize="1.0" />
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Which aroma do you want ?"
+        android:layout_gravity="center"
+        android:id="@+id/amorastext"
+        android:visibility="invisible"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectedAroma"
+        android:visibility="invisible"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+        android:id="@+id/imagearomas"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/noisette"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="hazelnut"
+            android:focusable="true"
+            android:src="@drawable/noisette"
+            />
+
+        <ImageView
+            android:id="@+id/caramel"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="caramel"
+            android:focusable="true"
+            android:src="@drawable/caramel" />
+
+        <ImageView
+            android:id="@+id/chocolate"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="chocolate"
+            android:focusable="true"
+            android:src="@drawable/chocolat" />
+
+        <ImageView
+            android:id="@+id/vanilla"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="vanilla"
+            android:focusable="true"
+            android:src="@drawable/vanille" />
+        <ImageView
+            android:id="@+id/speculoos"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/speculoos"
+            android:contentDescription="speculoos"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Ajoutez les ImageView pour normal, happy et joyful de la même manière -->
+
     </LinearLayout>
 
     <Button
@@ -133,9 +232,10 @@
         android:layout_height="wrap_content"
         android:text="Suggest Coffee"
         android:layout_gravity="center"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_marginTop="50dp"/>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/debugTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
