@@ -93,12 +93,12 @@
             android:focusable="true"
             android:src="@drawable/blush" />
         <ImageView
-            android:id="@+id/emoji_joyfull"
+            android:id="@+id/emoji_ecstasy"
             android:layout_marginHorizontal="8dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/smiley"
-            android:contentDescription="@string/joyfull"
+            android:contentDescription="@string/ecstasy"
             android:clickable="true"
             android:focusable="true" />
 
