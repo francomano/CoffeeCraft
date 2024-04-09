@@ -31,7 +31,7 @@ public class loginActivity extends AppCompatActivity {
         MaterialButton createAccountButton = findViewById(R.id.createAccountButton);
 
         //ApiService apiService = RetrofitClient.getClient("https://localhost/api/v1/");
-        ApiService apiService = RetrofitClient.getClient("https://10.0.2.2:8080/api/v1/");
+        ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8080/api/v1/");
 
         logInButton.setOnClickListener(view -> {
             String email = emailEditText.getText().toString();
