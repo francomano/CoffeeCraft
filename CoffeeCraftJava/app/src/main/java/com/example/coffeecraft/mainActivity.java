@@ -1,21 +1,13 @@
 package com.example.coffeecraft;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.coffeecraft.Utils.GetValueSugar;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -40,10 +33,11 @@ public class mainActivity extends AppCompatActivity {
     String time;
     String feeling, aroma;
 
+
     private Button suggestCoffeeButton;
     private Slider sugarSlider, milkSlider;
     private MaterialTextView debugTextView, feelingText, aromasText, sugarText, milkText, selectedAroma;
-    ImageView depressedEmoji, joyfullEmoji, happyEmoji, neutralEmoji, sadEmoji;
+    ImageView depressedEmoji, ecstasyEmoji, happyEmoji, neutralEmoji, sadEmoji;
     ImageView chocolate, caramel, hazelnut, vanilla, speculoos;
     ImageView currentImageView, currentAroma;
     LinearLayout imageEmojiView, slider, imagearomas;
@@ -85,7 +79,7 @@ public class mainActivity extends AppCompatActivity {
         sadEmoji = findViewById(R.id.emoji_sad);
         neutralEmoji = findViewById(R.id.emoji_neutral);
         happyEmoji = findViewById(R.id.emoji_happy);
-        joyfullEmoji = findViewById(R.id.emoji_joyfull);
+        ecstasyEmoji = findViewById(R.id.emoji_ecstasy);
 
         chocolate = findViewById(R.id.chocolate);
         caramel = findViewById(R.id.caramel);
@@ -137,10 +131,10 @@ public class mainActivity extends AppCompatActivity {
             currentImageView = happyEmoji;
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
-        joyfullEmoji.setOnClickListener(view -> {
-            feeling = joyfullEmoji.getContentDescription().toString();
+        ecstasyEmoji.setOnClickListener(view -> {
+            feeling = ecstasyEmoji.getContentDescription().toString();
             currentImageView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
-            currentImageView = joyfullEmoji;
+            currentImageView = ecstasyEmoji;
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
 
@@ -180,17 +174,11 @@ public class mainActivity extends AppCompatActivity {
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
 
-
-
-
-
         suggestCoffeeButton.setOnClickListener(v -> debugTextView.setText("Outcomes: " + getUserInfo()));
     }
 
     public List<String> getUserInfo(){
         now = LocalDateTime.now();
-        //String date = now.getDayOfMonth() + " " + now.getMonth() + " " + now.getYear();
-        //String time = now.getHour() + ":" + now.getMinute();
 
         int hour = now.getHour();
         String partOfDay;
@@ -202,12 +190,13 @@ public class mainActivity extends AppCompatActivity {
             partOfDay = "evening";
         }
 
-        int sugar = (int) sugarSlider.getValue();
+        int sugarInt = (int) sugarSlider.getValue();
+        String sugar = new GetValueSugar().getSugarValue(sugarInt);
         int milk = (int) milkSlider.getValue();
 
         List<String> outcomes = new ArrayList<>();
         outcomes.add(email);
-        outcomes.add(String.valueOf(sugar));
+        outcomes.add(sugar);
         outcomes.add(String.valueOf(milk));
         outcomes.add(selectedAroma.getText().toString());
         outcomes.add(partOfDay);
