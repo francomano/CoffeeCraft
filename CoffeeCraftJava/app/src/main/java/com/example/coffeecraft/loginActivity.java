@@ -39,9 +39,8 @@ public class loginActivity extends AppCompatActivity {
 
             Log.d("email: ", email);
 
-            LoginRequest loginRequest = new LoginRequest(email, password);
-
-            apiService.getAccessToken(loginRequest).enqueue(new Callback<TokenResponse>() {
+            // Update: Remove the LoginRequest object and pass email and password directly
+            apiService.getAccessToken(email, password).enqueue(new Callback<TokenResponse>() {
 
                 @Override
                 public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
