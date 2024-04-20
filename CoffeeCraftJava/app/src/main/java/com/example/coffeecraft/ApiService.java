@@ -8,12 +8,10 @@ import retrofit2.http.FormUrlEncoded;
 
 public interface ApiService {
 
+    // @Headers("Content-Type: application/x-www-form-urlencoded")
+    @POST("login/access-token") // Note: No leading slash here
     @FormUrlEncoded
-    @POST("login/access-token")
-    Call<TokenResponse> getAccessToken(
-            @Field("username") String username,
-            @Field("password") String password
-    );
+    Call<TokenResponse> getAccessToken(@Field("username") String username, @Field("password") String password);
 
     // Define other API endpoints and methods here
 }

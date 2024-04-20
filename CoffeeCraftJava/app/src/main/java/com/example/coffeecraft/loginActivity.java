@@ -31,7 +31,7 @@ public class loginActivity extends AppCompatActivity {
         MaterialButton logInButton = findViewById(R.id.buttonLogIn);
         MaterialButton createAccountButton = findViewById(R.id.createAccountButton);
 
-        ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8080/api/v1/");
+        ApiService apiService = RetrofitClient.getClient("http://10.0.2.2/api/v1/");
 
         logInButton.setOnClickListener(view -> {
             String email = emailEditText.getText().toString();
@@ -40,6 +40,7 @@ public class loginActivity extends AppCompatActivity {
             Log.d("email: ", email);
 
             // Update: Remove the LoginRequest object and pass email and password directly
+
             apiService.getAccessToken(email, password).enqueue(new Callback<TokenResponse>() {
 
                 @Override
