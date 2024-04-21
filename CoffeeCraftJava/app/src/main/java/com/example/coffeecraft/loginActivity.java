@@ -15,6 +15,10 @@ import retrofit2.Response;
 import android.util.Log;
 
 import java.io.IOException;
+import com.example.coffeecraft.network.ApiService;
+import com.example.coffeecraft.network.RetrofitClient;
+import com.example.coffeecraft.model.TokenResponse;
+
 
 public class loginActivity extends AppCompatActivity {
 
@@ -31,7 +35,8 @@ public class loginActivity extends AppCompatActivity {
         MaterialButton logInButton = findViewById(R.id.buttonLogIn);
         MaterialButton createAccountButton = findViewById(R.id.createAccountButton);
 
-        ApiService apiService = RetrofitClient.getClient("http://10.0.2.2/api/v1/");
+
+        ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
 
         logInButton.setOnClickListener(view -> {
             String email = emailEditText.getText().toString();
