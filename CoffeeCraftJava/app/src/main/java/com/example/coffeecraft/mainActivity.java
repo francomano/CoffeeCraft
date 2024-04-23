@@ -24,12 +24,8 @@ import com.google.android.material.textview.MaterialTextView;
 
 public class mainActivity extends AppCompatActivity {
 
-
-
     String email, password, country, birthdate, date, time, feeling, aroma;
-
     LocalDateTime now;
-
     private Button suggestCoffeeButton;
     private Slider sugarSlider, milkSlider;
     private MaterialTextView debugTextView, feelingText, aromasText, sugarText, milkText, selectedAroma;
