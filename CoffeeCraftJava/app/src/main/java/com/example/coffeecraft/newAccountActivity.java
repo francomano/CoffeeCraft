@@ -1,20 +1,14 @@
 package com.example.coffeecraft;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
-
 import com.example.coffeecraft.Utils.PasswordUtils;
 
-import org.w3c.dom.Text;
-
-import java.util.regex.Pattern;
 
 public class newAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +32,10 @@ public class newAccountActivity extends AppCompatActivity {
                 MaterialTextView error = findViewById(R.id.res);
                 error.setText(checkInputsEditText);
             } else {
-                Intent intent = new Intent(this, mainActivity.class);
+                Intent intent = new Intent(this, birthAndCountryActivity.class);
                 intent.putExtra("email", email1.getText().toString());
                 intent.putExtra("password", password1.getText().toString());
                 startActivity(intent);
-                Intent returnIntent = new Intent();
-                setResult(loginActivity.RESULT_OK,returnIntent);
                 finish();
             }
         });

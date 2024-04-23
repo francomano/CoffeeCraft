@@ -1,5 +1,7 @@
 package com.example.coffeecraft;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -89,6 +91,8 @@ public class loginActivity extends AppCompatActivity {
         createAccountButton.setOnClickListener(view -> {
             Intent intent2 = new Intent(loginActivity.this, newAccountActivity.class);
             startActivity(intent2);
+            finish();
         });
+
     }
 }

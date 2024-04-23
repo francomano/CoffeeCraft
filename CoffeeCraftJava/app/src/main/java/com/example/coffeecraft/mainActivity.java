@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.time.LocalDateTime;
 
@@ -25,14 +26,9 @@ public class mainActivity extends AppCompatActivity {
 
 
 
-    String email;
-    String password;
+    String email, password, country, birthdate, date, time, feeling, aroma;
 
     LocalDateTime now;
-    String date;
-    String time;
-    String feeling, aroma;
-
 
     private Button suggestCoffeeButton;
     private Slider sugarSlider, milkSlider;
@@ -51,7 +47,13 @@ public class mainActivity extends AppCompatActivity {
 
         email = intent.getStringExtra("email");
         password = intent.getStringExtra("password");
-        System.out.println(email);
+        country = intent.getStringExtra("country");
+        birthdate = intent.getStringExtra("date");
+
+        // Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, password, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, country, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, birthdate, Toast.LENGTH_SHORT).show();
 
         showButtons();
 
