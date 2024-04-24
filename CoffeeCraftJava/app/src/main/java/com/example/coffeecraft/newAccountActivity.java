@@ -38,12 +38,10 @@ public class newAccountActivity extends AppCompatActivity {
                 MaterialTextView error = findViewById(R.id.res);
                 error.setText(checkInputsEditText);
             } else {
-                Intent intent = new Intent(this, mainActivity.class);
+                Intent intent = new Intent(this, birthAndCountryActivity.class);
                 intent.putExtra("email", email1.getText().toString());
                 intent.putExtra("password", password1.getText().toString());
                 startActivity(intent);
-                Intent returnIntent = new Intent();
-                setResult(loginActivity.RESULT_OK,returnIntent);
                 finish();
             }
         });
