@@ -46,7 +46,7 @@ public class birthAndCountryActivity extends AppCompatActivity {
             if (!Objects.equals(selectedCountry, "--select a country--") && !dateTxt.getText().toString().equals("")) {
                 nodate.setText("");
                 nocountry.setText("");
-                Intent intent = new Intent(this, mainActivity.class);
+                Intent intent = new Intent(this, loginActivity.class);
                 intent.putExtra("email", email);
                 intent.putExtra("password", password);
                 intent.putExtra("country", selectedCountry);

@@ -61,12 +61,10 @@ public class newAccountActivity extends AppCompatActivity {
                     public void onResponse(Call<UserOut> call, Response<UserOut> response) {
                         if (response.isSuccessful()) {
                             Log.d("User_ID:","User Created: ID = " + response.body().getId());
-                            Intent intent = new Intent(newAccountActivity.this, mainActivity.class);
+                            Intent intent = new Intent(newAccountActivity.this, birthAndCountryActivity.class);
                             intent.putExtra("email", email1.getText().toString());
                             intent.putExtra("password", password1.getText().toString());
                             startActivity(intent);
-                            Intent returnIntent = new Intent();
-                            setResult(loginActivity.RESULT_OK,returnIntent);
                             finish();
                         } else {
                             Log.d("Error: ", "Failed to create user: " + response.errorBody().toString());
