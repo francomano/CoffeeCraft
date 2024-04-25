@@ -48,37 +48,15 @@ public class newAccountActivity extends AppCompatActivity {
                 MaterialTextView error = findViewById(R.id.res);
                 error.setText(checkInputsEditText);
             } else {
-                UserCreateOpen newUser = new UserCreateOpen();
-                newUser.setEmail(email1.getText().toString());
-                newUser.setPassword(password1.getText().toString());
-                newUser.setFullName("New User");
-                newUser.setAge(30);
-                newUser.setCountry("US");
-                ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:80/api/v1/");
-                Call<UserOut> call_2 = apiService.createUserOpen(newUser);
-                call_2.enqueue(new Callback<UserOut>() {
-                    @Override
-                    public void onResponse(Call<UserOut> call, Response<UserOut> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("User_ID:","User Created: ID = " + response.body().getId());
-                            Intent intent = new Intent(newAccountActivity.this, birthAndCountryActivity.class);
-                            intent.putExtra("email", email1.getText().toString());
-                            intent.putExtra("password", password1.getText().toString());
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Log.d("Error: ", "Failed to create user: " + response.errorBody().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserOut> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-            }
-        });
+                    Intent intent = new Intent(newAccountActivity.this, birthAndCountryActivity.class);
+                    intent.putExtra("email", email1.getText().toString());
+                    intent.putExtra("password", password1.getText().toString());
+                    startActivity(intent);
+                    finish();
+                }
+            });
     }
+
 
     public String checkInputsEditText(TextInputEditText email1, TextInputEditText email2, TextInputEditText password1,
                                     TextInputEditText password2){
