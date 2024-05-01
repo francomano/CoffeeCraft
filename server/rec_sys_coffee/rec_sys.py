@@ -23,7 +23,7 @@ def read_users_data(csv_file):
     return users_data
 
 # Example of usage
-users_data = read_users_data('users_data.csv')
+users_data = read_users_data('../../CoffeeCraft-server/backend/app/ml/data/model_data.csv')
 
 for email, data in users_data.items():
     print("Email:", email)
