@@ -8,15 +8,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import android.util.Log;
+
+import com.example.coffeecraft.network.ApiService;
+import com.example.coffeecraft.network.RetrofitClient;
+import com.example.coffeecraft.model.UserOut;
+
+
 
 import java.time.LocalDateTime;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.example.coffeecraft.Utils.GetValueSugar;
 import com.google.android.material.slider.Slider;
@@ -24,7 +31,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 public class mainActivity extends AppCompatActivity {
 
-    String email, password, country, birthdate, date, time, feeling, aroma;
+    String email, password, country, birthdate, date, time, feeling, aroma, token;
     LocalDateTime now;
     private Button suggestCoffeeButton;
     private Slider sugarSlider, milkSlider;
@@ -45,6 +52,11 @@ public class mainActivity extends AppCompatActivity {
         password = intent.getStringExtra("password");
         country = intent.getStringExtra("country");
         birthdate = intent.getStringExtra("date");
+        token = intent.getStringExtra("accessToken");
+        token = "Bearer " + token;
+        //token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTQxNjgzNDgsInN1YiI6IjIifQ.A4t8xk0eopDjr8yKlLBY5PWtbj8AUlqqu9mO2jL5Ypo";
+
+
 
         // Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
         // Toast.makeText(this, password, Toast.LENGTH_SHORT).show();
@@ -106,31 +118,31 @@ public class mainActivity extends AppCompatActivity {
         currentAroma = hazelnut;
 
         depressedEmoji.setOnClickListener(view -> {
-            feeling = depressedEmoji.getContentDescription().toString();
+            feeling = "depressed";
             currentImageView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
             currentImageView = depressedEmoji;
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
         sadEmoji.setOnClickListener(view -> {
-            feeling = sadEmoji.getContentDescription().toString();
+            feeling = "sad";
             currentImageView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
             currentImageView = sadEmoji;
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
         neutralEmoji.setOnClickListener(view -> {
-            feeling = neutralEmoji.getContentDescription().toString();
+            feeling = "normal";
             currentImageView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
             currentImageView = neutralEmoji;
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
         happyEmoji.setOnClickListener(view -> {
-            feeling = happyEmoji.getContentDescription().toString();
+            feeling = "happy";
             currentImageView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
             currentImageView = happyEmoji;
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
         ecstasyEmoji.setOnClickListener(view -> {
-            feeling = ecstasyEmoji.getContentDescription().toString();
+            feeling = "ecstatic";
             currentImageView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
             currentImageView = ecstasyEmoji;
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
@@ -172,10 +184,10 @@ public class mainActivity extends AppCompatActivity {
             view.setBackgroundColor(Color.parseColor("#D3D3D3"));
         });
 
-        suggestCoffeeButton.setOnClickListener(v -> debugTextView.setText("Outcomes: " + getUserInfo()));
+        suggestCoffeeButton.setOnClickListener(v -> debugTextView.setText("Outcome: " + getUserInfo()));
     }
 
-    public List<String> getUserInfo(){
+    public int getUserInfo(){
         now = LocalDateTime.now();
 
         int hour = now.getHour();
@@ -192,15 +204,44 @@ public class mainActivity extends AppCompatActivity {
         String sugar = new GetValueSugar().getSugarValue(sugarInt);
         int milk = (int) milkSlider.getValue();
 
-        List<String> outcomes = new ArrayList<>();
-        outcomes.add(email);
-        outcomes.add(sugar);
-        outcomes.add(String.valueOf(milk));
-        outcomes.add(selectedAroma.getText().toString());
-        outcomes.add(partOfDay);
-        outcomes.add(feeling);
+        ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
+        Log.d("token: ",token);
+        Call<UserOut> call_3 = apiService.getCurrentUser(token);
+        call_3.enqueue(new Callback<UserOut>() {
+            @Override
+            public void onResponse(Call<UserOut> call, Response<UserOut> response) {
+                if (response.isSuccessful()) {
+                    UserOut currentUser = response.body();
+                    System.out.println("UserID: " + currentUser.getId() + ", Email: " + currentUser.getEmail());
+                } else {
+                    System.out.println("Failed to retrieve user: " + response.errorBody().toString());
+                }
+            }
 
-        return outcomes;
+            @Override
+            public void onFailure(Call<UserOut> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        Log.d("feeling",feeling);
+        Call<String> call_4 = apiService.suggestCoffee(token, feeling, sugar);
+        call_4.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Coffee","Suggested Coffee: " + response.body());
+                } else {
+                    Log.d("Error", "Failed to get coffee suggestion: " + response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("FailureCallError","Error fetching coffee suggestion");
+                t.printStackTrace();
+            }
+        });
+        return 1;
     }
 
 }
