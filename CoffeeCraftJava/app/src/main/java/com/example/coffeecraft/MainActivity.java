@@ -218,6 +218,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void suggestCoffee() {
+
+        if (milkSlider != null) {
+            int milkInt = (int) milkSlider.getValue();
+        }
         int sugarInt = (int) sugarSlider.getValue();
         String sugar = new GetValueSugar().getSugarValue(sugarInt);
         now = LocalDateTime.now();
@@ -232,8 +236,6 @@ public class MainActivity extends AppCompatActivity {
             partOfDay = "evening";
         }
 
-        int milk = (int) milkSlider.getValue();
-
 
         ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
         Call<String> call = apiService.suggestCoffee(token, feeling, sugar);
@@ -241,7 +243,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Coffee", "Suggested Coffee: " + response.body());
+                    // Start CoffeeSuggestionActivity with suggested coffee and token
+                    Intent suggestionIntent = new Intent(MainActivity.this, CoffeeSuggestionActivity.class);
+                    suggestionIntent.putExtra("suggestedCoffee", response.body());
+                    suggestionIntent.putExtra("token", token);
+                    startActivity(suggestionIntent);
                 } else {
                     Log.d("Error", "Failed to get coffee suggestion: " + response.errorBody().toString());
                 }
