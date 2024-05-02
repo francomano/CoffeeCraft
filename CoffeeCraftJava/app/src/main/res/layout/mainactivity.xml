@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mainActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,9 +40,9 @@
         android:layout_height="wrap_content"
         android:text="How do you feel ?"
         android:layout_gravity="center"
-        android:visibility="invisible"
         android:id="@+id/feelingtext"
-        />
+        android:visibility="invisible"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,8 +60,7 @@
             android:clickable="true"
             android:contentDescription="@string/depressed"
             android:focusable="true"
-            android:src="@drawable/disappointed"
-            />
+            android:src="@drawable/disappointed" />
 
         <ImageView
             android:id="@+id/emoji_sad"
@@ -101,13 +100,9 @@
             android:contentDescription="@string/ecstasy"
             android:clickable="true"
             android:focusable="true" />
-
-        <!-- Ajoutez les ImageView pour normal, happy et joyful de la même manière -->
-
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -119,9 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sugar :"
-            android:id="@+id/sugartext"
-            android:visibility="invisible"
-            android:layout_gravity="center" />
+            android:id="@+id/sugartext" />
 
         <com.google.android.material.slider.Slider
             android:layout_width="300sp"
@@ -136,8 +129,7 @@
             android:layout_height="wrap_content"
             android:text="Milk :"
             android:visibility="invisible"
-            android:id="@+id/milkText"
-            android:layout_gravity="center" />
+            android:id="@+id/milkText" />
 
         <com.google.android.material.slider.Slider
             android:layout_width="300sp"
@@ -153,14 +145,12 @@
         android:layout_height="wrap_content"
         android:text="Which aroma do you want ?"
         android:layout_gravity="center"
-        android:id="@+id/amorastext"
-        android:visibility="invisible"/>
+        android:id="@+id/amorastext" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/selectedAroma"
-        android:visibility="invisible"
         android:layout_gravity="center"/>
 
     <LinearLayout
@@ -169,8 +159,7 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="16dp"
-        android:id="@+id/imagearomas"
-        android:visibility="invisible">
+        android:id="@+id/imagearomas">
 
         <ImageView
             android:id="@+id/noisette"
@@ -180,8 +169,7 @@
             android:clickable="true"
             android:contentDescription="hazelnut"
             android:focusable="true"
-            android:src="@drawable/noisette"
-            />
+            android:src="@drawable/noisette" />
 
         <ImageView
             android:id="@+id/caramel"
@@ -222,8 +210,6 @@
             android:clickable="true"
             android:focusable="true" />
 
-        <!-- Ajoutez les ImageView pour normal, happy et joyful de la même manière -->
-
     </LinearLayout>
 
     <Button
@@ -231,6 +217,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Suggest Coffee"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:layout_marginTop="50dp"/>
+
+    <Button
+        android:id="@+id/getInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Info"
         android:layout_gravity="center"
         android:visibility="invisible"
         android:layout_marginTop="50dp"/>

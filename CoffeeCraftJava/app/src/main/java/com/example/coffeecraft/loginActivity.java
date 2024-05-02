@@ -61,7 +61,7 @@ public class loginActivity extends AppCompatActivity {
                             String accessToken = tokenResponse.getAccessToken();
                             //Think about a way to store this globally for next calls (e.g. secrets)
                             Log.d("LoginActivity", "Access Token: " + accessToken);
-                            Intent intent = new Intent(loginActivity.this, mainActivity.class);
+                            Intent intent = new Intent(loginActivity.this, MainActivity.class);
                             intent.putExtra("email", email);
                             intent.putExtra("password", password);
                             intent.putExtra("accessToken", accessToken);
