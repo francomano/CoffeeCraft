@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         country = intent.getStringExtra("country");
         birthdate = intent.getStringExtra("date");
         token = intent.getStringExtra("accessToken");
-        token = "Bearer " + token;
+        if (token != null && token.length() >= 6 && !token.substring(0, 6).equals("Bearer")) {
+            token = "Bearer " + token;
+        }
+
 
         showButtons();
 
@@ -186,30 +189,51 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getUserInfo() {
+    public void getUserInfo(){
+
         ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
+        Log.d("token: ",token);
         Call<UserOut> call_3 = apiService.getCurrentUser(token);
         call_3.enqueue(new Callback<UserOut>() {
             @Override
             public void onResponse(Call<UserOut> call, Response<UserOut> response) {
                 if (response.isSuccessful()) {
                     UserOut currentUser = response.body();
-                    Log.d("UserInfo", "UserID: " + currentUser.getId() + ", Email: " + currentUser.getEmail());
+                    // Start UserInfoActivity with user info
+                    Intent userInfoIntent = new Intent(MainActivity.this, UserInfoActivity.class);
+                    userInfoIntent.putExtra("userInfo", "User ID: " + currentUser.getId() + ", Email: " + currentUser.getEmail());
+                    userInfoIntent.putExtra("token", token); // Pass token to UserInfoActivity
+                    startActivity(userInfoIntent);
                 } else {
-                    Log.d("UserInfo", "Failed to retrieve user: " + response.errorBody().toString());
+                    Log.d("Retrieval Error","Failed to retrieve user: " + response.errorBody().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<UserOut> call, Throwable t) {
-                Log.e("UserInfo", "Error fetching user info: " + t.getMessage());
+                t.printStackTrace();
             }
         });
     }
 
+
     public void suggestCoffee() {
         int sugarInt = (int) sugarSlider.getValue();
         String sugar = new GetValueSugar().getSugarValue(sugarInt);
+        now = LocalDateTime.now();
+
+        int hour = now.getHour();
+        String partOfDay;
+        if (hour >= 5 && hour < 12) {
+            partOfDay = "morning";
+        } else if (hour >= 12 && hour < 18) {
+            partOfDay = "afternoon";
+        } else {
+            partOfDay = "evening";
+        }
+
+        int milk = (int) milkSlider.getValue();
+
 
         ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
         Call<String> call = apiService.suggestCoffee(token, feeling, sugar);

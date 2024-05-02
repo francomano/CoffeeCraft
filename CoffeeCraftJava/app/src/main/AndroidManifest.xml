@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,15 +25,17 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-        />
+            />
         <activity
             android:name=".newAccountActivity"
             android:exported="false"
-        />
+            />
         <activity
             android:name=".birthAndCountryActivity"
             android:exported="false"
-        />
+            />
+        <activity
+            android:name=".UserInfoActivity"
+            android:exported="false" />
     </application>
-
 </manifest>

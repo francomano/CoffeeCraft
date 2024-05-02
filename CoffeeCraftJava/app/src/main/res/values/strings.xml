@@ -6,4 +6,7 @@
     <string name="happy">happy\n</string>
     <string name="joyfull">joyfull\n</string>
     <string name="ecstasy">ecstasy</string>
+    <string name="back_button_text">Back to Main Activity</string>
+    <string name="user_info_placeholder">User Info will be displayed here</string>
+
 </resources>
