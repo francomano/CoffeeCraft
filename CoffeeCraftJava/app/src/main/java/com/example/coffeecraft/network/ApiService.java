@@ -1,6 +1,7 @@
 package com.example.coffeecraft.network;
 
 
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -10,6 +11,11 @@ import retrofit2.http.FormUrlEncoded;
 import com.example.coffeecraft.model.TokenResponse;
 import com.example.coffeecraft.model.UserOut;
 import com.example.coffeecraft.model.UserCreateOpen;
+import com.example.coffeecraft.model.BuyCoffeeRequest;
+import com.example.coffeecraft.model.PurchaseResponse;
+
+import java.util.List;
+
 import retrofit2.http.Header;
 import retrofit2.http.Query;
 
@@ -29,9 +35,16 @@ public interface ApiService {
     @GET("users/me")
     Call<UserOut> getCurrentUser(@Header("Authorization") String authToken);
 
+
     @GET("coffee")
-    Call<String> suggestCoffee(
+    Call<List<String>> suggestCoffee(
             @Header("Authorization") String authToken,
             @Query("mood") String mood,
-            @Query("sugar") String sugar);
+            @Query("sugar") Integer sugar);
+
+    @POST("coffee/buy")
+    Call<PurchaseResponse> buyCoffee(
+            @Header("Authorization") String authToken,
+            @Body BuyCoffeeRequest request
+    );
 }

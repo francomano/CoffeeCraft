@@ -15,11 +15,12 @@ import androidx.core.content.ContextCompat;
 import com.example.coffeecraft.model.UserOut;
 import com.example.coffeecraft.network.ApiService;
 import com.example.coffeecraft.network.RetrofitClient;
-import com.example.coffeecraft.Utils.GetValueSugar;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -223,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
             int milkInt = (int) milkSlider.getValue();
         }
         int sugarInt = (int) sugarSlider.getValue();
-        String sugar = new GetValueSugar().getSugarValue(sugarInt);
         now = LocalDateTime.now();
 
         int hour = now.getHour();
@@ -238,14 +238,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
-        Call<String> call = apiService.suggestCoffee(token, feeling, sugar);
-        call.enqueue(new Callback<String>() {
+        Call<List<String>> call = apiService.suggestCoffee(token, feeling, sugarInt);
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<List<String>> call, Response<List<String>> response){
                 if (response.isSuccessful()) {
                     // Start CoffeeSuggestionActivity with suggested coffee and token
                     Intent suggestionIntent = new Intent(MainActivity.this, CoffeeSuggestionActivity.class);
-                    suggestionIntent.putExtra("suggestedCoffee", response.body());
+                    suggestionIntent.putExtra("suggestedCoffeeList", new ArrayList<>(response.body()));
+                    suggestionIntent.putExtra("mood", feeling);
+                    suggestionIntent.putExtra("sugar",sugarInt);
                     suggestionIntent.putExtra("token", token);
                     startActivity(suggestionIntent);
                 } else {
@@ -254,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<List<String>> call, Throwable t) {
                 Log.e("FailureCallError", "Error fetching coffee suggestion");
                 t.printStackTrace();
             }
