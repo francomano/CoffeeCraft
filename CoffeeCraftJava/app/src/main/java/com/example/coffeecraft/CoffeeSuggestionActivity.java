@@ -1,35 +1,30 @@
 package com.example.coffeecraft;
-
-import com.example.coffeecraft.model.BuyCoffeeRequest;
-import com.example.coffeecraft.model.PurchaseResponse;
-
-import com.example.coffeecraft.network.ApiService;
-import com.example.coffeecraft.network.RetrofitClient;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
-import android.util.Log;
-
-import android.widget.LinearLayout;
-
+import com.example.coffeecraft.network.ApiService;
+import com.example.coffeecraft.network.RetrofitClient;
+import com.example.coffeecraft.model.BuyCoffeeRequest;
+import com.example.coffeecraft.model.PurchaseResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class CoffeeSuggestionActivity extends AppCompatActivity {
 
     private List<String> suggestedCoffeeList;
-    private String token;
     private Integer sugarInt;
     private String feeling;
+    private String token;
     private ApiService apiService;
+    private RecyclerView recyclerView;
+    private CoffeeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +41,27 @@ public class CoffeeSuggestionActivity extends AppCompatActivity {
         // Initialize ApiService instance
         apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
 
-        // Initialize views
-        LinearLayout coffeeImagesLayout = findViewById(R.id.coffeeImagesLayout);
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new CoffeeAdapter(this, suggestedCoffeeList);
+        recyclerView.setAdapter(adapter);
+
+        // Initialize Buy Button
         Button buyButton = findViewById(R.id.buyButton);
-        Button getNewSuggestionButton = findViewById(R.id.getNewSuggestionButton);
-
-        // Display suggested coffees
-        for (String coffeeName : suggestedCoffeeList) {
-            ImageView imageView = new ImageView(this);
-            imageView.setImageResource(getImageResourceForCoffee(coffeeName));
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            coffeeImagesLayout.addView(imageView);
-        }
-
-        // Handle buy button click
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Assuming the first coffee is selected for buying
-                String selectedCoffee = suggestedCoffeeList.get(0);
-                buyCoffee(selectedCoffee);
+                int selectedPosition = adapter.getSelectedPosition();
+                if (selectedPosition != RecyclerView.NO_POSITION) {
+                    String selectedCoffee = suggestedCoffeeList.get(selectedPosition);
+                    buyCoffee(selectedCoffee);
+                }
             }
         });
 
-        // Handle get new suggestion button click
+        // Initialize Get New Suggestion Button
+        Button getNewSuggestionButton = findViewById(R.id.getNewSuggestionButton);
         getNewSuggestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,26 +74,9 @@ public class CoffeeSuggestionActivity extends AppCompatActivity {
         });
     }
 
-    // Method to get the image resource for a given coffee type
-    private int getImageResourceForCoffee(String coffeeType) {
-        switch (coffeeType) {
-            case "espresso":
-                return R.drawable.espresso;
-            case "cappuccino":
-                return R.drawable.cappuccino;
-            // Add cases for other coffee types
-            case "americano":
-                return R.drawable.americano;
-            case "cortado":
-                return R.drawable.cortado;
-            default:
-                return R.drawable.default_coffee_image; // Default image
-        }
-    }
-
     // Method to execute the buyCoffee call
     private void buyCoffee(String coffeeType) {
-        BuyCoffeeRequest request = new BuyCoffeeRequest("happy", 3, coffeeType);
+        BuyCoffeeRequest request = new BuyCoffeeRequest(feeling,sugarInt,coffeeType);
         Call<PurchaseResponse> call = apiService.buyCoffee(token, request);
         call.enqueue(new Callback<PurchaseResponse>() {
             @Override
@@ -115,23 +88,18 @@ public class CoffeeSuggestionActivity extends AppCompatActivity {
                     String mood = purchaseResponse.getMood();
                     int sugar = purchaseResponse.getSugar();
                     String coffee_type = purchaseResponse.getCoffeeType();
-                    System.out.println("you bought "+coffee_type+"!");
-
+                    System.out.println("You bought " + coffee_type + "!");
                 } else {
                     // Handle unsuccessful response
-                    Log.e("Error", "Failed to buy coffee: " + response.errorBody().toString());
+                    System.err.println("Failed to buy coffee: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<PurchaseResponse> call, Throwable t) {
                 // Handle failure
-                Log.e("Failure", "Error buying coffee", t);
+                System.err.println("Error buying coffee: " + t.getMessage());
             }
         });
     }
 }
-
-
-
-
