@@ -74,14 +74,25 @@ public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.ViewHolder
         return coffeeList.size();
     }
 
-    // Method to create a mapping between coffee types and corresponding image resources
+    // Method to create a mapping between coffee types and corresponding image
+    // resources
     private Map<String, Integer> createCoffeeImageMap(Context context) {
         Map<String, Integer> imageMap = new HashMap<>();
         imageMap.put("espresso", R.drawable.espresso);
-        imageMap.put("cappuccino", R.drawable.cappuccino);
+        imageMap.put("latte", R.drawable.latte);
+        imageMap.put("black_coffee", R.drawable.black_coffee);
+        imageMap.put("mocha", R.drawable.mocha);
         imageMap.put("americano", R.drawable.americano);
-        imageMap.put("cortado", R.drawable.cortado);
-        // Add more mappings for other coffee types if needed
+        imageMap.put("cappuccino", R.drawable.cappuccino);
+        imageMap.put("flat_white", R.drawable.flat_white);
+        imageMap.put("cafe_au_lait", R.drawable.cafe_au_lait);
+        imageMap.put("macchiato", R.drawable.macchiato);
+        imageMap.put("cold_brew", R.drawable.cold_brew);
+        imageMap.put("irish_coffee", R.drawable.irish_coffee);
+        imageMap.put("frappe", R.drawable.frappe);
+        imageMap.put("vietnamese_coffee", R.drawable.vietnamese_coffee);
+        imageMap.put("affogato", R.drawable.affogato);
+        imageMap.put("red_eye", R.drawable.red_eye);
 
         // Default image resource
         defaultImageResource = R.drawable.default_coffee_image;
