@@ -79,6 +79,7 @@ public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.ViewHolder
     private Map<String, Integer> createCoffeeImageMap(Context context) {
         Map<String, Integer> imageMap = new HashMap<>();
         imageMap.put("espresso", R.drawable.espresso);
+        /*
         imageMap.put("latte", R.drawable.latte);
         imageMap.put("black_coffee", R.drawable.black_coffee);
         imageMap.put("mocha", R.drawable.mocha);
@@ -93,6 +94,8 @@ public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.ViewHolder
         imageMap.put("vietnamese_coffee", R.drawable.vietnamese_coffee);
         imageMap.put("affogato", R.drawable.affogato);
         imageMap.put("red_eye", R.drawable.red_eye);
+
+         */
 
         // Default image resource
         defaultImageResource = R.drawable.default_coffee_image;
