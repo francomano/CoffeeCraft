@@ -12,6 +12,7 @@ import android.graphics.Color;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.coffeecraft.Utils.Coffee;
 import com.example.coffeecraft.model.UserOut;
 import com.example.coffeecraft.network.ApiService;
 import com.example.coffeecraft.network.RetrofitClient;
@@ -21,6 +22,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -242,10 +244,18 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response){
+                ArrayList<Coffee> coffees = new ArrayList<>();
                 if (response.isSuccessful()) {
                     // Start CoffeeSuggestionActivity with suggested coffee and token
                     Intent suggestionIntent = new Intent(MainActivity.this, CoffeeSuggestionActivity.class);
-                    suggestionIntent.putExtra("suggestedCoffeeList", new ArrayList<>(response.body()));
+                    for(String coffee : response.body()){
+                        if(!Objects.equals(coffee, "espresso")) {
+                            coffees.add(new Coffee(coffee, R.drawable.default_coffee_image));
+                        } else {
+                            coffees.add(new Coffee(coffee, R.drawable.espresso));
+                        }
+                    }
+                    suggestionIntent.putParcelableArrayListExtra("suggestedCoffeeList", coffees);
                     suggestionIntent.putExtra("mood", feeling);
                     suggestionIntent.putExtra("sugar",sugarInt);
                     suggestionIntent.putExtra("token", token);
