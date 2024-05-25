@@ -31,10 +31,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.view.View;
+
 
 public class UserInfoActivity extends AppCompatActivity {
 
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +53,7 @@ public class UserInfoActivity extends AppCompatActivity {
         String token = intent.getStringExtra("token");
 
         // Display user info
-        MaterialTextView userInfoTextView = findViewById(R.id.userInfoTextView);
+        TextView userInfoTextView = findViewById(R.id.userInfoTextView);
         userInfoTextView.setText(userInfo);
 
         // Button to return to MainActivity
@@ -84,22 +89,46 @@ public class UserInfoActivity extends AppCompatActivity {
             hashMap = (HashMap<String, Integer>) ois.readObject();
             fis.close();
             ois.close();
-        } catch (IOException | ClassCastException | ClassNotFoundException e){
+        } catch (IOException | ClassCastException | ClassNotFoundException e) {
             Toast.makeText(context, "No historic !", Toast.LENGTH_SHORT).show();
         }
 
-        ListView listView;
-        List<Map.Entry<String, Integer>> sortedEntries;
+        TableLayout tableLayout = findViewById(R.id.tableLayout);
 
-        if(hashMap != null){
+        if (hashMap != null) {
 
-            sortedEntries = new ArrayList<>(hashMap.entrySet());
+            List<Map.Entry<String, Integer>> sortedEntries = new ArrayList<>(hashMap.entrySet());
             sortedEntries.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
-            listView = findViewById(R.id.listViewCoffee);
-            HistoricAdapter adapter = new HistoricAdapter(this, sortedEntries);
-            listView.setAdapter(adapter);
-            System.out.println(hashMap);
+            for (int i = 0; i < sortedEntries.size(); i++) {
+                Map.Entry<String, Integer> entry = sortedEntries.get(i);
+                String name = entry.getKey();
+                Integer score = entry.getValue();
+
+                // Create a new row
+                TableRow row = new TableRow(this);
+
+                // Rank TextView
+                TextView rankTextView = new TextView(this);
+                rankTextView.setText(String.valueOf(i + 1)); // Rank starts from 1
+                rankTextView.setTextColor(ContextCompat.getColor(this, R.color.black)); // Set text color
+                row.addView(rankTextView); // Add to row
+
+                // Name TextView
+                TextView nameTextView = new TextView(this);
+                nameTextView.setText(name);
+                nameTextView.setTextColor(ContextCompat.getColor(this, R.color.black)); // Set text color
+                row.addView(nameTextView); // Add to row
+
+                // Score TextView
+                TextView scoreTextView = new TextView(this);
+                scoreTextView.setText(String.valueOf(score));
+                scoreTextView.setTextColor(ContextCompat.getColor(this, R.color.black)); // Set text color
+                row.addView(scoreTextView); // Add to row
+
+                // Add row to the table layout
+                tableLayout.addView(row);
+            }
         }
     }
 }
