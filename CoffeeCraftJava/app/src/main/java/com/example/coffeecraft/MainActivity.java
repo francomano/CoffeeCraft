@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         showButtons();
-
     }
 
     public void showButtons() {
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         imageEmojiView.setVisibility(View.VISIBLE);
         aromasText.setVisibility(View.VISIBLE);
         slider.setVisibility(View.VISIBLE);
-        aromasText.setVisibility(View.VISIBLE);
         sugarText.setVisibility(View.VISIBLE);
         milkText.setVisibility(View.VISIBLE);
         selectedAroma.setVisibility(View.VISIBLE);
@@ -190,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getUserInfo() {
-
         ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
         Log.d("token: ", token);
         Call<UserOut> call_3 = apiService.getCurrentUser(token);
@@ -218,9 +215,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void suggestCoffee() {
-
+        int milkInt = 0;
         if (milkSlider != null) {
-            int milkInt = (int) milkSlider.getValue();
+            milkInt = (int) milkSlider.getValue();
         }
         int sugarInt = (int) sugarSlider.getValue();
         now = LocalDateTime.now();
@@ -235,69 +232,50 @@ public class MainActivity extends AppCompatActivity {
             partOfDay = "evening";
         }
 
-
         ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
         Call<List<String>> call = apiService.suggestCoffee(token, feeling, sugarInt);
         call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response){
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 ArrayList<Coffee> coffees = new ArrayList<>();
                 if (response.isSuccessful()) {
-                    // Start CoffeeSuggestionActivity with suggested coffee and token
-                    // espresso = "espresso"
-                    // latte = "latte"
-                    // black_coffee = "black_coffee"
-                    // mocha = "mocha"
-                    // americano = "americano"
-                    // cappuccino = "cappuccino"
-                    // flat_white = "flat_white"
-                    // cafe_au_lait = "cafe_au_lait"
-                    // macchiato = "macchiato"
-                    // cold_brew = "cold_brew"
-                    // irish_coffee = "irish_coffee"
-                    // frappe = "frappe"
-                    // vietnamese_coffee = "vietnamese_coffee"
-                    // affogato = "affogato"
-                    // red_eye = "red_eye"
                     Intent suggestionIntent = new Intent(MainActivity.this, CoffeeSuggestionActivity.class);
-                    for(String coffee : response.body()){
-                        if(!Objects.equals(coffee, "espresso")) {
+                    for (String coffee : response.body()) {
+                        if (Objects.equals(coffee, "espresso")) {
                             coffees.add(new Coffee(coffee, R.drawable.espresso));
-                        if(!Objects.equals(coffee, "latte")) {
+                        } else if (Objects.equals(coffee, "latte")) {
                             coffees.add(new Coffee(coffee, R.drawable.latte));
-                        if(!Objects.equals(coffee, "black_coffee")) {
+                        } else if (Objects.equals(coffee, "black_coffee")) {
                             coffees.add(new Coffee(coffee, R.drawable.ristretto));
-                        if(!Objects.equals(coffee, "mocha")) {
+                        } else if (Objects.equals(coffee, "mocha")) {
                             coffees.add(new Coffee(coffee, R.drawable.mocha));
-                        if(!Objects.equals(coffee, "americano")) {
+                        } else if (Objects.equals(coffee, "americano")) {
                             coffees.add(new Coffee(coffee, R.drawable.americano));
-                        if(!Objects.equals(coffee, "cappuccino")) {
+                        } else if (Objects.equals(coffee, "cappuccino")) {
                             coffees.add(new Coffee(coffee, R.drawable.cappuccino));
-                            if(!Objects.equals(coffee, "flat_white")) {
+                        } else if (Objects.equals(coffee, "flat_white")) {
                             coffees.add(new Coffee(coffee, R.drawable.flat_white));
-                        if(!Objects.equals(coffee, "cafe_au_lait")) {
+                        } else if (Objects.equals(coffee, "cafe_au_lait")) {
                             coffees.add(new Coffee(coffee, R.drawable.breve));
-                        if(!Objects.equals(coffee, "macchiato")) {
-                            coffees.add(new Coffee(coffee, R.drawable.macchiato));
-                        if(!Objects.equals(coffee, "cold_brew")) {
+                        } else if (Objects.equals(coffee, "macchiato")) {
+                            coffees.add(new Coffee(coffee, R.drawable.mocchiato));
+                        } else if (Objects.equals(coffee, "cold_brew")) {
                             coffees.add(new Coffee(coffee, R.drawable.glace));
-                        if(!Objects.equals(coffee, "irish_coffee")) {
+                        } else if (Objects.equals(coffee, "irish_coffee")) {
                             coffees.add(new Coffee(coffee, R.drawable.irish));
-                        if(!Objects.equals(coffee, "frappe")) {
+                        } else if (Objects.equals(coffee, "frappe")) {
                             coffees.add(new Coffee(coffee, R.drawable.frappe));
-                        if(!Objects.equals(coffee, "vietnamese_coffee")) {
+                        } else if (Objects.equals(coffee, "vietnamese_coffee")) {
                             coffees.add(new Coffee(coffee, R.drawable.vienna));
-                        if(!Objects.equals(coffee, "affogato")) {
+                        } else if (Objects.equals(coffee, "affogato")) {
                             coffees.add(new Coffee(coffee, R.drawable.mocaccino));
-                        if(!Objects.equals(coffee, "red_eye")) {
+                        } else if (Objects.equals(coffee, "red_eye")) {
                             coffees.add(new Coffee(coffee, R.drawable.raf));
-                        } else {
-                            coffees.add(new Coffee(coffee, R.drawable.espresso));
                         }
                     }
                     suggestionIntent.putParcelableArrayListExtra("suggestedCoffeeList", coffees);
                     suggestionIntent.putExtra("mood", feeling);
-                    suggestionIntent.putExtra("sugar",sugarInt);
+                    suggestionIntent.putExtra("sugar", sugarInt);
                     suggestionIntent.putExtra("token", token);
                     startActivity(suggestionIntent);
                 } else {
