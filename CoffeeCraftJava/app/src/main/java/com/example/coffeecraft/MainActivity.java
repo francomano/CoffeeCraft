@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView currentImageView, currentAroma;
     LinearLayout imageEmojiView, slider, imagearomas;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         if (token != null && token.length() >= 6 && !token.substring(0, 6).equals("Bearer")) {
             token = "Bearer " + token;
         }
-
 
         showButtons();
 
@@ -99,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         sugarText.setVisibility(View.VISIBLE);
         milkText.setVisibility(View.VISIBLE);
         selectedAroma.setVisibility(View.VISIBLE);
-
 
         currentImageView = depressedEmoji;
         currentAroma = hazelnut;
@@ -192,10 +189,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getUserInfo(){
+    public void getUserInfo() {
 
         ApiService apiService = RetrofitClient.getClient("http://10.0.2.2:8889/api/v1/");
-        Log.d("token: ",token);
+        Log.d("token: ", token);
         Call<UserOut> call_3 = apiService.getCurrentUser(token);
         call_3.enqueue(new Callback<UserOut>() {
             @Override
@@ -204,11 +201,12 @@ public class MainActivity extends AppCompatActivity {
                     UserOut currentUser = response.body();
                     // Start UserInfoActivity with user info
                     Intent userInfoIntent = new Intent(MainActivity.this, UserInfoActivity.class);
-                    userInfoIntent.putExtra("userInfo", "User ID: " + currentUser.getId() + ", Email: " + currentUser.getEmail());
+                    userInfoIntent.putExtra("userInfo",
+                            "User ID: " + currentUser.getId() + ", Email: " + currentUser.getEmail());
                     userInfoIntent.putExtra("token", token); // Pass token to UserInfoActivity
                     startActivity(userInfoIntent);
                 } else {
-                    Log.d("Retrieval Error","Failed to retrieve user: " + response.errorBody().toString());
+                    Log.d("Retrieval Error", "Failed to retrieve user: " + response.errorBody().toString());
                 }
             }
 
@@ -218,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void suggestCoffee() {
 
@@ -247,10 +244,53 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Coffee> coffees = new ArrayList<>();
                 if (response.isSuccessful()) {
                     // Start CoffeeSuggestionActivity with suggested coffee and token
+                    // espresso = "espresso"
+                    // latte = "latte"
+                    // black_coffee = "black_coffee"
+                    // mocha = "mocha"
+                    // americano = "americano"
+                    // cappuccino = "cappuccino"
+                    // flat_white = "flat_white"
+                    // cafe_au_lait = "cafe_au_lait"
+                    // macchiato = "macchiato"
+                    // cold_brew = "cold_brew"
+                    // irish_coffee = "irish_coffee"
+                    // frappe = "frappe"
+                    // vietnamese_coffee = "vietnamese_coffee"
+                    // affogato = "affogato"
+                    // red_eye = "red_eye"
                     Intent suggestionIntent = new Intent(MainActivity.this, CoffeeSuggestionActivity.class);
                     for(String coffee : response.body()){
                         if(!Objects.equals(coffee, "espresso")) {
-                            coffees.add(new Coffee(coffee, R.drawable.default_coffee_image));
+                            coffees.add(new Coffee(coffee, R.drawable.espresso));
+                        if(!Objects.equals(coffee, "latte")) {
+                            coffees.add(new Coffee(coffee, R.drawable.latte));
+                        if(!Objects.equals(coffee, "black_coffee")) {
+                            coffees.add(new Coffee(coffee, R.drawable.ristretto));
+                        if(!Objects.equals(coffee, "mocha")) {
+                            coffees.add(new Coffee(coffee, R.drawable.mocha));
+                        if(!Objects.equals(coffee, "americano")) {
+                            coffees.add(new Coffee(coffee, R.drawable.americano));
+                        if(!Objects.equals(coffee, "cappuccino")) {
+                            coffees.add(new Coffee(coffee, R.drawable.cappuccino));
+                            if(!Objects.equals(coffee, "flat_white")) {
+                            coffees.add(new Coffee(coffee, R.drawable.flat_white));
+                        if(!Objects.equals(coffee, "cafe_au_lait")) {
+                            coffees.add(new Coffee(coffee, R.drawable.breve));
+                        if(!Objects.equals(coffee, "macchiato")) {
+                            coffees.add(new Coffee(coffee, R.drawable.macchiato));
+                        if(!Objects.equals(coffee, "cold_brew")) {
+                            coffees.add(new Coffee(coffee, R.drawable.glace));
+                        if(!Objects.equals(coffee, "irish_coffee")) {
+                            coffees.add(new Coffee(coffee, R.drawable.irish));
+                        if(!Objects.equals(coffee, "frappe")) {
+                            coffees.add(new Coffee(coffee, R.drawable.frappe));
+                        if(!Objects.equals(coffee, "vietnamese_coffee")) {
+                            coffees.add(new Coffee(coffee, R.drawable.vienna));
+                        if(!Objects.equals(coffee, "affogato")) {
+                            coffees.add(new Coffee(coffee, R.drawable.mocaccino));
+                        if(!Objects.equals(coffee, "red_eye")) {
+                            coffees.add(new Coffee(coffee, R.drawable.raf));
                         } else {
                             coffees.add(new Coffee(coffee, R.drawable.espresso));
                         }
