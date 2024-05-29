@@ -172,19 +172,9 @@ public class MainActivity extends AppCompatActivity {
         suggestCoffeeButton.setVisibility(View.VISIBLE);
         getInfoButton.setVisibility(View.VISIBLE);
 
-        suggestCoffeeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                suggestCoffee();
-            }
-        });
+        suggestCoffeeButton.setOnClickListener(v -> suggestCoffee());
 
-        getInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getUserInfo();
-            }
-        });
+        getInfoButton.setOnClickListener(v -> getUserInfo());
     }
 
     public void getUserInfo() {

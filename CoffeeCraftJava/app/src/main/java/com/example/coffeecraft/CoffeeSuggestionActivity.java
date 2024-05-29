@@ -153,5 +153,15 @@ public class CoffeeSuggestionActivity extends AppCompatActivity {
         } catch (IOException | ClassCastException e){
             Toast.makeText(context, "Error writing file !", Toast.LENGTH_SHORT).show();
         }
+
+        String lastCoffee = "last.ser";
+        try (FileOutputStream fos = context.openFileOutput(lastCoffee, MODE_PRIVATE)){
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(coffee_type);
+            fos.close();
+            oos.close();
+        }  catch (IOException | ClassCastException e){
+            Toast.makeText(context, "Error writing file !", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -58,6 +62,12 @@ public class UserInfoActivity extends AppCompatActivity {
 
         // Button to return to MainActivity
         MaterialButton backButton = findViewById(R.id.backButton);
+        MaterialButton reviewButton = findViewById(R.id.reviewButton);
+        ImageButton notGood = findViewById(R.id.buttonNext);
+        ImageButton good = findViewById(R.id.buttonBuy);
+        LinearLayout review = findViewById(R.id.reviewView);
+        MaterialTextView coffeetype = findViewById(R.id.coffeeType);
+
         backButton.setOnClickListener(v -> {
             // Create an intent to return to MainActivity
             Intent mainActivityIntent = new Intent(UserInfoActivity.this, MainActivity.class);
@@ -70,6 +80,33 @@ public class UserInfoActivity extends AppCompatActivity {
             finish();
         });
 
+        reviewButton.setOnClickListener(v -> {
+            String lastCoffee = null;
+            try {
+                lastCoffee = getCoffeeType();
+            } catch (FileNotFoundException ignore) {
+            }
+            if(!Objects.equals(lastCoffee, "")) {
+                coffeetype.setText("The last prediction was " + lastCoffee);
+                reviewButton.setVisibility(View.GONE);
+                review.setVisibility(View.VISIBLE);
+                notGood.setOnClickListener(v1 -> {
+                    Toast.makeText(context, "Thank you for the feedback", Toast.LENGTH_SHORT).show();
+                    review.setVisibility(View.GONE);
+                    reviewButton.setVisibility(View.VISIBLE);
+                });
+                good.setOnClickListener(v2 -> {
+                    Toast.makeText(context, "Thank you for the feedback", Toast.LENGTH_SHORT).show();
+                    review.setVisibility(View.GONE);
+                    reviewButton.setVisibility(View.VISIBLE);
+                });
+            } else {
+                Toast.makeText(context, "You've never bought coffee !", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
         try {
             getHistoric();
         } catch (FileNotFoundException e) {
@@ -77,6 +114,20 @@ public class UserInfoActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public String getCoffeeType() throws FileNotFoundException {
+        String filename = "last.ser";
+        String lastType;
+        try (FileInputStream fis = context.openFileInput(filename)){
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            lastType = (String) ois.readObject();
+            fis.close();
+            ois.close();
+        } catch (IOException | ClassCastException | ClassNotFoundException e) {
+            return "";
+        }
+        return lastType;
     }
 
     public void getHistoric() throws FileNotFoundException {
